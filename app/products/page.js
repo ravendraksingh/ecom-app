@@ -16,22 +16,9 @@ import { AppContext } from "@/context/AppContext";
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  //   const data = await fetch("http://localhost:8100/api/v1/products");
-  //   const products = await data.json();
-
-  //   const _data = await fetch("http://localhost:8100/api/v1/categories");
-  //   const categories = await _data.json();
+  const [loading, setLoading] = useState(false);
   const { appData, setAppData } = useContext(AppContext);
-  console.log("appData", appData);
-
-  async function fetchProducts() {
-    const response = await fetch("http://localhost:8100/api/v1/products");
-    if (response.status == 200) {
-      const data = await response.json();
-      setProducts(data);
-    }
-  }
-
+ 
   async function fetchCategories() {
     const response = await fetch("http://localhost:8100/api/v1/categories");
     if (response.status == 200) {
@@ -40,15 +27,33 @@ const ProductsPage = () => {
     }
   }
 
+  async function fetchProducts_dummyJson() {
+    setLoading(true);
+    const res = await fetch("/api/dummyjson/products");
+    if (res.status == 200) {
+      const data = await res.json();
+      setProducts(data.products);
+      setLoading(false);
+    }
+  }
+
+  async function fetchProducts() {
+    const response = await fetch("http://localhost:8100/api/v1/products");
+    if (response.status == 200) {
+      const data = await response.json();
+      setProducts(data);
+    }
+  }
   useEffect(() => {
-    fetchProducts();
-    setCategories();
+    // fetchProducts();
+    //fetchCategories();
+    fetchProducts_dummyJson();
   }, []);
 
   return (
-    <div className="container flex flex-col md:flex-row mx-auto p-4">
+    <div className="container mx-auto">
       {/* Filters */}
-      <div className="">
+      {/* <div className="">
         <p className="font-bold text-lg">Filters</p>
         <p className="mb-3">Categories</p>
         <Select>
@@ -78,10 +83,11 @@ const ProductsPage = () => {
             </Label>
           </div>
         </RadioGroup>
-      </div>
+      </div> */}
       {/* Products */}
-      <div className="flex flex-col flex-wrap md:flex-row gap-4 p-4">
-        {products.map((product) => (
+      <div className="flex flex-col md:flex-wrap md:flex-row gap-4 p-4">
+        {loading && <p className="text-5xl text-muted-foreground">Loading...</p>}
+        {products?.map((product) => (
           <SingleProduct product={product} key={product.id} />
         ))}
       </div>

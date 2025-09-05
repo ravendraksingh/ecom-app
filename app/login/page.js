@@ -62,23 +62,38 @@ const Login = () => {
   });
 
   async function onSubmit(data) {
-    const _user = await signin(data);
-    console.log("user", _user);
-    const user = localStorage.getItem("user");
-    if (user != null) {
-      console.log("user found in localStorage. user: ", user);
-      localStorage.removeItem("user");
-    } else {
-      console.log("user not found in localStorage");
+    try {
+      const response = await fetch("/api/products", {
+        method: "POST",
+      });
+      if (response.status == 200) {
+        const data = await response.json();
+        console.log("Success");
+        console.log({data});
+      }
+    } catch (err) {
+      console.log("Error: ", err.message);
     }
-    localStorage.setItem("user", JSON.stringify(_user));
-    console.log("user", _user);
-    setAppData({
-      ...appData,
-      user: _user,
-    });
-    redirect("/products");
   }
+
+  //   async function onSubmit(data) {
+  //     const _user = await signin(data);
+  //     console.log("user", _user);
+  //     const user = localStorage.getItem("user");
+  //     if (user != null) {
+  //       console.log("user found in localStorage. user: ", user);
+  //       localStorage.removeItem("user");
+  //     } else {
+  //       console.log("user not found in localStorage");
+  //     }
+  //     localStorage.setItem("user", JSON.stringify(_user));
+  //     console.log("user", _user);
+  //     setAppData({
+  //       ...appData,
+  //       user: _user,
+  //     });
+  //     redirect("/products");
+  //   }
 
   return (
     <div className="container p-4 mx-auto">

@@ -6,6 +6,7 @@ import { LoginLogout } from "@/components/Login/LoginLogout";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/Navigation/AppSidebar";
 import { AppProvider } from "@/context/AppContext";
+import { CartProvider } from "@/context/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,18 +30,20 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AppProvider>
-          <SidebarProvider defaultOpen={false} >
-            <AppSidebar />
-            <main className="w-[100%]">
-              <div className="flex flex-row items-center">
-                <SidebarTrigger />
-                <Navbar />
-                <Cart />
-                <LoginLogout />
-              </div>
-              <hr />
-              {children}
-            </main>
+          <SidebarProvider defaultOpen={false}>
+            <CartProvider>
+              <AppSidebar />
+              <main className="w-[100%]">
+                <div className="flex flex-row items-center">
+                  <SidebarTrigger />
+                  <Navbar />
+                  <Cart />
+                  <LoginLogout />
+                </div>
+                <hr />
+                {children}
+              </main>
+            </CartProvider>
           </SidebarProvider>
         </AppProvider>
       </body>
