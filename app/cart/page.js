@@ -122,7 +122,7 @@ const CartPage = () => {
           </Card>
 
           <Card className="flex flex-1 h-fit p-1">
-            <CardContent>
+            <CardContent className="py-3">
               <p>
                 Subtotal {`(${cart.totalQuantity} items)`}: $
                 {cart.subtotal.toFixed(2)}
