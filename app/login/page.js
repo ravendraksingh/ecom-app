@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCustomer } from "@/context/CustomerContext";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().min(6, {
@@ -24,42 +25,14 @@ const formSchema = z.object({
     .min(6, { message: "password must be at least 6 characters" }),
 });
 
-const registerFormSchema = z.object({
-  regFullname: z.string().min(3),
-  regEmail: z.string().min(6),
-  regPassword: z.string().min(6),
-});
-
-const Login = () => {
-  const { user, login, logout } = useCustomer();
+function LoginForm({ redirectTo }) {
+  const { login } = useCustomer();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") ?? "/";
-
-  //   const form = useForm({
-  //     resolver: zodResolver(formSchema),
-  //     defaultValues: {
-  //         email: "",
-  //         password: "",
-  //     }
-  //   });
-
-  const JWT_SECRET = "qwertyuiopasdfghjklzxcvbnm123456";
-
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
       email: "",
-    },
-  });
-
-  const registerForm = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      regFullname: "",
-      regEmail: "",
-      regPassword: "",
     },
   });
 
@@ -73,36 +46,66 @@ const Login = () => {
           expiresInMins: 30,
         }),
       });
-      if (response.status == 200) {
+      if (response.status === 200) {
         const data = await response.json();
-        console.log("Success");
+        console.log("Login Success");
         console.log(data);
         login(data);
         router.push(redirectTo);
       }
     } catch (err) {
-      console.log("Error: ", err.message);
+      console.log("Login Error: ", err.message);
     }
   }
 
-  //   async function onSubmit(data) {
-  //     const _user = await signin(data);
-  //     console.log("user", _user);
-  //     const user = localStorage.getItem("user");
-  //     if (user != null) {
-  //       console.log("user found in localStorage. user: ", user);
-  //       localStorage.removeItem("user");
-  //     } else {
-  //       console.log("user not found in localStorage");
-  //     }
-  //     localStorage.setItem("user", JSON.stringify(_user));
-  //     console.log("user", _user);
-  //     setAppData({
-  //       ...appData,
-  //       user: _user,
-  //     });
-  //     redirect("/products");
-  //   }
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+        <FormField
+          control={form.control}
+          name="email"
+          className="mb-3"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter your email here"
+                  {...field}
+                  className="mb-3 max-w-[400px]"
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          className="mb-3"
+          render={({ field }) => (
+            <FormItem className="mb-3">
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter your password here"
+                  {...field}
+                  className="mb-3 max-w-[400px]"
+                  type="password"
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  );
+}
+
+// Child component that uses useSearchParams inside Suspense
+function LoginWithSearchParams() {
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo") ?? "/";
 
   return (
     <div className="container p-4 mx-auto">
@@ -110,111 +113,20 @@ const Login = () => {
         <Tabs defaultValue="login">
           <TabsList>
             <TabsTrigger value="login">Login</TabsTrigger>
-            <TabsTrigger value="register">Register</TabsTrigger>
           </TabsList>
           <TabsContent value="login">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
-                <FormField
-                  control={form.control}
-                  name="email"
-                  className="mb-3"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your email here"
-                          {...field}
-                          className="mb-3 max-w-[400px]"
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  className="mb-3"
-                  render={({ field }) => (
-                    <FormItem className="mb-3">
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your password here"
-                          {...field}
-                          className="mb-3 max-w-[400px]"
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit">Submit</Button>
-              </form>
-            </Form>
-          </TabsContent>
-          <TabsContent value="register">
-            <Form {...registerForm}>
-              <form onSubmit={registerForm.handleSubmit(onSubmit)}>
-                <FormField
-                  control={form.control}
-                  name="regFullname"
-                  className="mb-3"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Full Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your full name here"
-                          className="mb-3 max-w-[400px]"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="regEmail"
-                  className="mb-3"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your email here"
-                          className="mb-3 max-w-[400px]"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="regPassword"
-                  className="mb-3"
-                  render={({ field }) => (
-                    <FormItem className="mb-3">
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your password here"
-                          className="mb-3 max-w-[400px]"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit">Submit</Button>
-              </form>
-            </Form>
+            <LoginForm redirectTo={redirectTo} />
           </TabsContent>
         </Tabs>
       </div>
     </div>
   );
-};
+}
 
-export default Login;
+export default function Login() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginWithSearchParams />
+    </Suspense>
+  );
+}
