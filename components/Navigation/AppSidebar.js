@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Sidebar,
@@ -19,6 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useCustomer } from "@/context/CustomerContext";
 
 import {
   Home,
@@ -32,10 +34,12 @@ import {
   User2,
   ChevronUp,
   ClipboardList,
+  PackageOpen,
 } from "lucide-react";
+import Image from "next/image";
 
 // Menu items.
-const items = [
+const publicItems = [
   {
     title: "Home",
     url: "/",
@@ -52,6 +56,24 @@ const items = [
     icon: ShoppingCart,
   },
   {
+    title: "Search",
+    url: "#",
+    icon: Search,
+  },
+];
+
+const privateItems = [
+  {
+    title: "My Orders",
+    url: "/orders",
+    icon: PackageOpen,
+  },
+  {
+    title: "My Account",
+    url: "/account",
+    icon: User2,
+  },
+  {
     title: "Inbox",
     url: "#",
     icon: Inbox,
@@ -62,17 +84,6 @@ const items = [
     icon: Calendar,
   },
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "My Account",
-    url: "/account",
-    icon: User2,
-  },
-  
-  {
     title: "Settings",
     url: "#",
     icon: Settings,
@@ -80,14 +91,27 @@ const items = [
 ];
 
 const AppSidebar = () => {
+  const { user } = useCustomer();
+  const { username } = user;
+
+  // Conditionally include items based on login
+  const menuItems =
+    username != null && username != ""
+      ? [...publicItems, ...privateItems]
+      : publicItems;
+
   return (
     <Sidebar variant="sidebar" collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="py-4">Application</SidebarGroupLabel>
+          <SidebarGroupLabel className="py-4 mb-5">
+            <Image src="/niyava-logo.png" height={32} width={32} alt="Niyava Logo" 
+            className="me-3"/>
+            Application
+            </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>

@@ -13,9 +13,13 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { Images } from "lucide-react";
+import { useCustomer } from "@/context/CustomerContext";
 
 const Navbar = () => {
-    const imageSize = 64;
+  const { user } = useCustomer();
+  const { username } = user;
+  const imageSize = 64;
+
   return (
     <div className="hidden md:flex md:flex-1 md:flex-row md:justify-center md:my-3">
       <NavigationMenu>
@@ -30,17 +34,20 @@ const Navbar = () => {
               <Link href={"/products"}>Products</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link href={"/orders"}>Orders</Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
+          {username !== null && username != "" && (
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link href={"/orders"}>Orders</Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          )}
+
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
               <Link href={"/refunds"}>Refunds</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
-           <NavigationMenuItem>
+          <NavigationMenuItem>
             <NavigationMenuLink asChild>
               <Link href={"/cart"}>Cart</Link>
             </NavigationMenuLink>

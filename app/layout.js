@@ -28,18 +28,18 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SidebarProvider defaultOpen={false}>
-          <CartProvider>
-            <CustomerProvider>
+        <CustomerProvider>
+          <SidebarProvider defaultOpen={false}>
+            <CartProvider>
               <AppSidebar />
               <main className="w-[100%]">
                 <TopNav />
                 {children}
                 <Footer />
               </main>
-            </CustomerProvider>
-          </CartProvider>
-        </SidebarProvider>
+            </CartProvider>
+          </SidebarProvider>
+        </CustomerProvider>
       </body>
     </html>
   );

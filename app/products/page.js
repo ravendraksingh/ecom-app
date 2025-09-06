@@ -57,7 +57,7 @@ const ProductsPage = () => {
   }, []);
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto lg:py-[3rem]">
       {/* Filters */}
       {/* <div className="">
         <p className="font-bold text-lg">Filters</p>
@@ -91,7 +91,7 @@ const ProductsPage = () => {
         </RadioGroup>
       </div> */}
       {/* Products */}
-      <div className="flex flex-col md:flex-wrap md:flex-row gap-4 p-4">
+      <div className="flex flex-col md:justify-evenly md:flex-wrap md:flex-row gap-4 md:gap-[2rem] p-4">
         {loading && (
           <p className="text-5xl text-muted-foreground h-[50vh]">Loading...</p>
         )}

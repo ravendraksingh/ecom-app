@@ -31,8 +31,6 @@ function init(initialState) {
 function customerReducer(state, action) {
   switch (action.type) {
     case "LOGIN": {
-      console.log("state", state);
-      console.log("action", action);
       return {
         ...state,
         id: action.payload.id,

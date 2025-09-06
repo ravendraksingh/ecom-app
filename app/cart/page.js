@@ -33,16 +33,20 @@ const CartPage = () => {
     <div className="container mx-auto lg:p-3 mb-3">
       <h2 className="text-3xl font-bold my-3 ps-3 lg:ps-0">Shopping Cart</h2>
       {cart?.totalProducts == 0 && (
-        <Card className="mb-5 h-[50vh]">
-          <CardContent>
-            <p>Your cart is empty!</p>
-            <p>
-              <Link href="/products" className="underline text-blue-500">
-                Add products.
-              </Link>
-            </p>
-          </CardContent>
-        </Card>
+        <div className="m-3 h-[40vh]">
+          <Card>
+            <CardContent>
+              <p className="text-red-500">Oops! Your cart is empty.</p>
+              <br />
+              <p>
+                <Link href="/products" className="underline text-blue-500">
+                  Let's fix that - check out our
+                  latest products.
+                </Link>
+              </p>
+            </CardContent>
+          </Card>
+        </div>
       )}
       {cart?.totalProducts > 0 && (
         <div className="flex flex-col lg:flex-row p-1 gap-3">

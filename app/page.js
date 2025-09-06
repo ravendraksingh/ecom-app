@@ -11,7 +11,7 @@ export default function Home() {
           height={1080}
         />
       </div>
-      <div className="container p-3 md:p-[5rem]">
+      <div className="container p-3 md:p-[5rem] mx-auto">
         <h1 className="text-4xl md:text-6xl font-bold text-center mb-3">Innovative IT Solutions to Empower Your Business </h1>
         <p className="text-xl md:text-2xl">
           At Niyava, we help businesses thrive in the digital age through

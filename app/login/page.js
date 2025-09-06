@@ -48,8 +48,6 @@ function LoginForm({ redirectTo }) {
       });
       if (response.status === 200) {
         const data = await response.json();
-        console.log("Login Success");
-        console.log(data);
         login(data);
         router.push(redirectTo);
       }

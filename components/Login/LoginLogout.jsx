@@ -17,7 +17,6 @@ export const LoginLogout = () => {
   const { user, logout } = useCustomer();
   const { username, firstName } = user;
   const pathname = usePathname();
-  console.log(username, firstName);
 
   const doLogout = () => {
     logout();
