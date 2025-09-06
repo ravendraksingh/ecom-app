@@ -28,10 +28,17 @@ const ProductsPage = () => {
 
   async function fetchProducts_dummyJson() {
     setLoading(true);
-    const res = await fetch("/api/dummyjson/products");
-    if (res.status == 200) {
-      const data = await res.json();
-      setProducts(data.products);
+    try {
+      const res = await fetch("/api/dummyjson/products");
+      if (res.ok) {
+        const data = await res.json();
+        setProducts(data.products);
+      } else {
+        console.error("Failed to fetch products", res.status);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    } finally {
       setLoading(false);
     }
   }
@@ -85,7 +92,9 @@ const ProductsPage = () => {
       </div> */}
       {/* Products */}
       <div className="flex flex-col md:flex-wrap md:flex-row gap-4 p-4">
-        {loading && <p className="text-5xl text-muted-foreground h-[50vh]">Loading...</p>}
+        {loading && (
+          <p className="text-5xl text-muted-foreground h-[50vh]">Loading...</p>
+        )}
         {/* {loading && <ProductListSkeleton />} */}
         {products?.map((product) => (
           <SingleProduct product={product} key={product.id} />

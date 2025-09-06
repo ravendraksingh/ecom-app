@@ -16,13 +16,13 @@ export default function Home() {
         <p className="text-xl md:text-2xl">
           At Niyava, we help businesses thrive in the digital age through
           cutting-edge IT consulting, custom software development, CRM
-          implementation, and technology outsourcing. Whether you're a growing
+          implementation, and technology outsourcing. Whether you&apos;re a growing
           enterprise or an established organization, our expert team delivers
           scalable, secure, and tailor-made solutions that accelerate your
           digital transformation. From optimizing operations to building
           future-ready platforms, we combine strategy, innovation, and deep tech
-          expertise to turn your business challenges into opportunities. Let's
-          build what's next - together.
+          expertise to turn your business challenges into opportunities. Let&apos;s
+          build what&apos;s next - together.
         </p>
       </div>
     </>
