@@ -18,13 +18,15 @@ export const SingleProduct = ({ product }) => {
 
   function notify() {
     toast("Item added to cart!");
+    console.log("item added");
+    
   }
 
   return (
     <Card className="min-w-[300px]">
       <CardContent className="md:max-w-[320px] lg:max-w-[380px]">
-        <Link href={`/products/${product?.id}`}>
-          <div className="mb-3">
+        <div className="mb-3">
+          <Link href={`/products/${product?.id}`}>
             <div className="flex justify-center">
               <Image
                 // src={product.image_url}
@@ -39,47 +41,37 @@ export const SingleProduct = ({ product }) => {
             <CardDescription>
               <p>{product?.description}</p>
             </CardDescription>
-          </div>
-          <ul className="flex flex-row items-center">
-            <li className="me-2">{`${product.rating} `} </li>
-            {Array.from({ length: Math.floor(`${product.rating}`) }).map(
-              (_, index) => (
-                <li key={index}>
-                  <Star size={14} color="#ff9529" fill="#ff9529"></Star>
-                </li>
-              )
-            )}
-          </ul>
-          <div className="mb-3">
-            <span className="text-3xl font-bold">
-              <span className="text-sm">$</span>
-              {`${product?.price}`}{" "}
-            </span>
-            <span className="text-muted-foreground">{`(${product?.discountPercentage}% off)`}</span>
-          </div>
-          <CardFooter className="p-0">
-            <Button
-              className="bg-yellow-400 text-black hover:bg-yellow-400 hover:text-black"
-              onClick={() => {
-                addItem(product);
-                notify();
-              }}
-            >
-              <ShoppingCart />
-              <span>Add to Cart</span>
-            </Button>
-            <Toaster
-              position="top-center"
-              toastOptions={{
-                style: {
-                  boxShadow: "0 1px 2px rgba(255,255,255,0.1)",
-                  color: "blue",
-                  // boxShadow: "0",
-                },
-              }}
-            />
-          </CardFooter>
-        </Link>
+          </Link>
+        </div>
+        <ul className="flex flex-row items-center">
+          <li className="me-2">{`${product.rating} `} </li>
+          {Array.from({ length: Math.floor(`${product.rating}`) }).map(
+            (_, index) => (
+              <li key={index}>
+                <Star size={14} color="#ff9529" fill="#ff9529"></Star>
+              </li>
+            )
+          )}
+        </ul>
+        <div className="mb-3">
+          <span className="text-3xl font-bold">
+            <span className="text-sm">$</span>
+            {`${product?.price}`}{" "}
+          </span>
+          <span className="text-muted-foreground">{`(${product?.discountPercentage}% off)`}</span>
+        </div>
+        <CardFooter className="p-0">
+          <Button
+            className="bg-yellow-400 text-black hover:bg-yellow-400 hover:text-black"
+            onClick={() => {
+              addItem(product);
+              notify();
+            }}
+          >
+            <ShoppingCart />
+            <span>Add to Cart</span>
+          </Button>
+        </CardFooter>
       </CardContent>
     </Card>
   );

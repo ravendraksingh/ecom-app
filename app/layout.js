@@ -6,6 +6,7 @@ import { CartProvider } from "@/context/CartContext";
 import TopNav from "@/components/Navigation/TopNav";
 import { CustomerProvider } from "@/context/CustomerContext";
 import Footer from "@/components/Navigation/Footer";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,15 @@ export default function RootLayout({ children }) {
               <main className="w-[100%]">
                 <TopNav />
                 {children}
+                <Toaster
+                  position="top-center"
+                  toastOptions={{
+                    style: {
+                      boxShadow: "0 1px 2px rgba(255,255,255,0.1)",
+                      color: "blue",
+                    },
+                  }}
+                />
                 <Footer />
               </main>
             </CartProvider>
