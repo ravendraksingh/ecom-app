@@ -40,7 +40,7 @@ const CartPage = () => {
               <br />
               <p>
                 <Link href="/products" className="underline text-blue-500">
-                  Let's fix that - check out our
+                  Let&pos;s fix that - check out our
                   latest products.
                 </Link>
               </p>
