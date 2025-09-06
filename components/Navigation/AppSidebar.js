@@ -31,6 +31,7 @@ import {
   UserRoundCog,
   User2,
   ChevronUp,
+  ClipboardList,
 } from "lucide-react";
 
 // Menu items.
@@ -39,6 +40,11 @@ const items = [
     title: "Home",
     url: "/",
     icon: Home,
+  },
+  {
+    title: "Products",
+    url: "/products",
+    icon: ClipboardList,
   },
   {
     title: "Cart",
@@ -60,6 +66,12 @@ const items = [
     url: "#",
     icon: Search,
   },
+  {
+    title: "My Account",
+    url: "/account",
+    icon: User2,
+  },
+  
   {
     title: "Settings",
     url: "#",

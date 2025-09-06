@@ -30,7 +30,7 @@ const CartPage = () => {
   //   }, []);
 
   return (
-    <div className="container mx-auto lg:p-3">
+    <div className="container mx-auto lg:p-3 mb-3">
       <h2 className="text-3xl font-bold my-3 ps-3 lg:ps-0">Shopping Cart</h2>
       {cart?.totalProducts == 0 && (
         <Card className="mb-5 h-[50vh]">
@@ -45,8 +45,8 @@ const CartPage = () => {
         </Card>
       )}
       {cart?.totalProducts > 0 && (
-        <div className="flex flex-col lg:flex-row lg:gap-3">
-          <Card className="lg:w-[70%] border-0 md:border-1">
+        <div className="flex flex-col lg:flex-row p-1 gap-3">
+          <Card className="lg:w-[70%] md:border-1">
             <CardHeader>
               <CardTitle className="flex flex-col md:flex-row gap-3 justify-between md:items-center">
                 <p>Cart ID: {cart.cartId}</p>
@@ -121,7 +121,7 @@ const CartPage = () => {
             </CardContent>
           </Card>
 
-          <Card className="flex flex-1 h-fit">
+          <Card className="flex flex-1 h-fit p-1">
             <CardContent>
               <p>
                 Subtotal {`(${cart.totalQuantity} items)`}: $
