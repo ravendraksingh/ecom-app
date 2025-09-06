@@ -11,10 +11,13 @@ import {
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 import Link from "next/link";
+import Image from "next/image";
+import { Images } from "lucide-react";
 
 const Navbar = () => {
+    const imageSize = 64;
   return (
-    <div className="w-full flex flex-row justify-center my-3">
+    <div className="hidden md:flex md:flex-1 md:flex-row md:justify-center md:my-3">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>

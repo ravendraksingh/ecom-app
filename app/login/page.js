@@ -1,5 +1,4 @@
 "use client";
-import React, { useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,9 +12,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { signin } from "../actions/auth";
-import { redirect } from "next/navigation";
-import { AppContext } from "@/context/AppContext";
+import { useCustomer } from "@/context/CustomerContext";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().min(6, {
@@ -33,7 +31,11 @@ const registerFormSchema = z.object({
 });
 
 const Login = () => {
-  const { appData, setAppData } = useContext(AppContext);
+  const { user, login, logout } = useCustomer();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo") ?? "/";
+
   //   const form = useForm({
   //     resolver: zodResolver(formSchema),
   //     defaultValues: {
@@ -63,13 +65,20 @@ const Login = () => {
 
   async function onSubmit(data) {
     try {
-      const response = await fetch("/api/products", {
+      const response = await fetch("/api/dummyjson/auth/login", {
         method: "POST",
+        body: JSON.stringify({
+          username: "emilys",
+          password: "emilyspass",
+          expiresInMins: 30,
+        }),
       });
       if (response.status == 200) {
         const data = await response.json();
         console.log("Success");
-        console.log({data});
+        console.log(data);
+        login(data);
+        router.push(redirectTo);
       }
     } catch (err) {
       console.log("Error: ", err.message);

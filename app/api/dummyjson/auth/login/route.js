@@ -1,3 +1,5 @@
+import { serialize } from "cookie";
+import { NextResponse } from "next/server";
 export async function POST(request) {
   //   const body = await request.json();
   try {
@@ -12,19 +14,18 @@ export async function POST(request) {
       credentials: "include", // Include cookies (e.g., accessToken) in the request
     });
     if (response.status == 200) {
-      const data = await response.json();
-      const response2 = new Response(
-        JSON.stringify({
-          data,
-        }),
-        {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      return response2;
+      const data = await response.json(); 
+      const accessTokenCookie = serialize("accessToken", data?.accessToken, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 9000,
+        sameSite: "strict",
+        parth: "/"
+      })
+
+      const res = NextResponse.json(data);
+      res.headers.append("Set-Cookie", accessTokenCookie);
+      return res;
     }
   } catch (err) {
     console.log("Error: ", err.message);

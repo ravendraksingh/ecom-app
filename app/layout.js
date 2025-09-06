@@ -1,12 +1,11 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navigation/Navbar";
-import { Cart } from "../components/Cart/Cart";
-import { LoginLogout } from "@/components/Login/LoginLogout";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/Navigation/AppSidebar";
-import { AppProvider } from "@/context/AppContext";
 import { CartProvider } from "@/context/CartContext";
+import TopNav from "@/components/Navigation/TopNav";
+import { CustomerProvider } from "@/context/CustomerContext";
+import Footer from "@/components/Navigation/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,23 +28,18 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AppProvider>
-          <SidebarProvider defaultOpen={false}>
-            <CartProvider>
+        <SidebarProvider defaultOpen={false}>
+          <CartProvider>
+            <CustomerProvider>
               <AppSidebar />
               <main className="w-[100%]">
-                <div className="flex flex-row items-center">
-                  <SidebarTrigger />
-                  <Navbar />
-                  <Cart />
-                  <LoginLogout />
-                </div>
-                <hr />
+                <TopNav />
                 {children}
+                <Footer />
               </main>
-            </CartProvider>
-          </SidebarProvider>
-        </AppProvider>
+            </CustomerProvider>
+          </CartProvider>
+        </SidebarProvider>
       </body>
     </html>
   );

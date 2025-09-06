@@ -2,8 +2,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { AppContext } from "@/context/AppContext";
-import { signOut } from "@/app/actions/auth";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -12,35 +10,37 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
 import { User2, ChevronDown } from "lucide-react";
+import { useCustomer } from "@/context/CustomerContext";
+import { redirect, usePathname } from "next/navigation";
 
 export const LoginLogout = () => {
-  const [authenticated, setAuthenticated] = useState(false);
-  const [username, setUsername] = useState();
-  const { appData, setAppData } = useContext(AppContext);
+  const { user, logout } = useCustomer();
+  const { username, firstName } = user;
+  const pathname = usePathname();
+  console.log(username, firstName);
 
-  useEffect(() => {
-    if (appData != null) {
-      const _authenticated = appData?.user?.authenticated ?? false;
-      console.log("authenticated", _authenticated);
-      setAuthenticated(_authenticated);
-      setUsername(appData?.user?.email);
-    }
-  }, [appData]);
-
-  function doLogout() {
-    if (signOut()) {
-      localStorage.removeItem("user");
-      setAppData({});
-    }
-  }
+  const doLogout = () => {
+    logout();
+    redirect("/products");
+  };
 
   return (
-    <div className="flex flex-row me-3 items-center">
-      {authenticated && (
+    <div className="flex flex-row items-center">
+      {(username == null || username == "") && (
+        <Button variant="link">
+          <Link href={`/login?redirectTo=${encodeURIComponent(pathname)}`}>
+            Login
+          </Link>
+        </Button>
+      )}
+
+      {/* If user is present and logged in */}
+      {username != null && username !== "" && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton>
               <User2 color="" fill="blue" size={32} />
+              <span>{firstName}</span>
               <ChevronDown className="ml-auto" size={32} />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
@@ -67,11 +67,6 @@ export const LoginLogout = () => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      )}
-      {!authenticated && (
-        <Button variant="link">
-          <Link href="/login">Login</Link>
-        </Button>
       )}
     </div>
   );

@@ -71,7 +71,7 @@ export const SingleProduct = ({ product }) => {
           <span>Add to Cart</span>
         </Button>
         <Toaster
-          position="bottom-center"
+          position="top-center"
           toastOptions={{
             style: {
               boxShadow: "0 1px 2px rgba(255,255,255,0.1)",

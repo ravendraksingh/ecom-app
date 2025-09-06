@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { v4 as uuidv4 } from "uuid";
-const STORAGE_KEY = "nextjs_cart";
+const STORAGE_KEY = "niyava_ecom_cart";
 
 const CartContext = createContext();
 

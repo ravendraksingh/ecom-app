@@ -11,14 +11,13 @@ import {
 } from "@components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useContext, useEffect, useState } from "react";
-import { AppContext } from "@/context/AppContext";
+import ProductListSkeleton from "@/components/Product/ProductListSkeleton";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { appData, setAppData } = useContext(AppContext);
- 
+
   async function fetchCategories() {
     const response = await fetch("http://localhost:8100/api/v1/categories");
     if (response.status == 200) {
@@ -86,7 +85,8 @@ const ProductsPage = () => {
       </div> */}
       {/* Products */}
       <div className="flex flex-col md:flex-wrap md:flex-row gap-4 p-4">
-        {loading && <p className="text-5xl text-muted-foreground">Loading...</p>}
+        {loading && <p className="text-5xl text-muted-foreground h-[50vh]">Loading...</p>}
+        {/* {loading && <ProductListSkeleton />} */}
         {products?.map((product) => (
           <SingleProduct product={product} key={product.id} />
         ))}
