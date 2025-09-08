@@ -5,7 +5,7 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Separator } from "@/components/ui/separator";
 
 export default async function ProductDetailsPage({ params }) {
-  const { productId } = params;
+  const { productId } = await params;
   console.log("productId", productId);
 
   //   const response = await fetch(`/api/dummyjson/products/${productId}`);
