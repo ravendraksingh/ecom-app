@@ -1,19 +1,16 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Star } from "lucide-react";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Separator } from "@/components/ui/separator";
 
 export default async function ProductDetailsPage({ params }) {
   console.log("params:", await params);
-  const { productId } = await params;
-  console.log("productId", productId);
+  const { id } = await params;
+  console.log("productId", id);
 
-  if (!productId) {
+  if (!id) {
     throw new Error("productId parameter is missing!");
   }
-  //   const response = await fetch(`/api/dummyjson/products/${productId}`);
-  const response = await fetch(`https://dummyjson.com/products/${productId}`);
+  const response = await fetch(`https://dummyjson.com/products/${id}`);
 
   const product = await response.json();
 
@@ -28,11 +25,11 @@ function ProductDetails({ product }) {
           <div className="flex flex-col lg:flex-row">
             <div className="lg:me-3">
               <Image
-                src={product.images[0]}
+                src={product?.images[0]}
                 width={500}
                 height={500}
                 //   fill="true"
-                alt={`${product.name} Image`}
+                alt={`${product?.name} Image`}
                 className="rounded-xl"
               ></Image>
             </div>
@@ -78,22 +75,6 @@ function ProductDetails({ product }) {
               <hr />
             </div>
           </div>
-          {/* <div>
-            <ScrollArea className="h-36 w-48 rounded-md border">
-              <div className="p4">
-                {product?.reviews &&
-                  product.reviews.map((review, index) => (
-                    <div key={`${review.comment}_${index}`}>
-                      <p>{review.rating}</p>
-                      <p>{review.comment}</p>
-                      <p>{review.reviewerName}</p>
-                      <p>{review.reviewerEmail}</p>
-                      <Separator className="my-2" />
-                    </div>
-                  ))}
-              </div>
-            </ScrollArea>
-          </div> */}
         </div>
         <div className="flex flex-col gap-3">
           <p className="font-bold text-xl">Seller</p>
