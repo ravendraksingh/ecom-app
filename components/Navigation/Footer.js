@@ -28,12 +28,54 @@ const Footer = () => {
         <div>
           <p className="text-2xl font-semibold pb-3">Niyava Services</p>
           <ul className="list-none">
-            <li>IT Consulting</li>
-            <li>Web Development & Design</li>
-            <li>Software Development</li>
-            <li>Software Testing</li>
-            <li>IT Support</li>
-            <li>Finacle Support & Customization</li>
+            <li>
+              <Link
+                href="https://niyava.com/service/it-consulting-services"
+                target="_blank"
+              >
+                IT Consulting
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="https://niyava.com/service/web-development-services"
+                target="_blank"
+              >
+                Web Development & Design
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="https://niyava.com/service/software-development-services"
+                target="_blank"
+              >
+                Software Development
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="https://niyava.com/service/software-testing-services"
+                target="_blank"
+              >
+                Software Testing
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="https://niyava.com/service/it-support"
+                target="_blank"
+              >
+                IT Support
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="https://niyava.com/service/finacle-support-services"
+                target="_blank"
+              >
+                Finacle Support & Customization
+              </Link>
+            </li>
           </ul>
         </div>
         {/* right */}
@@ -70,7 +112,7 @@ const Footer = () => {
           <Link href="https://niyava.com" target="_blank" className="underline">
             Niyava Technologies.
           </Link>
-          <span>{" "}All rights reserved.</span>
+          <span> All rights reserved.</span>
         </p>
       </div>
     </div>

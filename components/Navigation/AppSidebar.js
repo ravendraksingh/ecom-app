@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import {
   Sidebar,
@@ -20,7 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useCustomer } from "@/context/CustomerContext";
+import UserMenu from "./UserMenu"; // client component that uses user state
 
 import {
   Home,
@@ -62,53 +61,60 @@ const publicItems = [
   },
 ];
 
-const privateItems = [
-  {
-    title: "My Orders",
-    url: "/orders",
-    icon: PackageOpen,
-  },
-  {
-    title: "My Account",
-    url: "/account",
-    icon: User2,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-];
+// const privateItems = [
+//   {
+//     title: "My Orders",
+//     url: "/orders",
+//     icon: PackageOpen,
+//   },
+//   {
+//     title: "My Account",
+//     url: "/account",
+//     icon: User2,
+//   },
+//   {
+//     title: "Inbox",
+//     url: "#",
+//     icon: Inbox,
+//   },
+//   {
+//     title: "Calendar",
+//     url: "#",
+//     icon: Calendar,
+//   },
+//   {
+//     title: "Settings",
+//     url: "#",
+//     icon: Settings,
+//   },
+// ];
 
 const AppSidebar = () => {
-  const { user } = useCustomer();
-  const { username } = user;
+  //   const { user } = useCustomer();
+  //   const { username } = user;
 
   // Conditionally include items based on login
-  const menuItems =
-    username != null && username != ""
-      ? [...publicItems, ...privateItems]
-      : publicItems;
+  //   const menuItems =
+  //     username != null && username != ""
+  //       ? [...publicItems, ...privateItems]
+  //       : publicItems;
+
+  const menuItems = [...publicItems];
 
   return (
     <Sidebar variant="sidebar" collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="py-4 mb-5">
-            <Image src="/niyava-logo.png" height={32} width={32} alt="Niyava Logo" 
-            className="me-3"/>
+            <Image
+              src="/niyava-logo.png"
+              height={32}
+              width={32}
+              alt="Niyava Logo"
+              className="me-3"
+            />
             Application
-            </SidebarGroupLabel>
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
@@ -122,6 +128,7 @@ const AppSidebar = () => {
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
+            <UserMenu />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
